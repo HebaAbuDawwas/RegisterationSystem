@@ -1,0 +1,67 @@
+﻿@model IEnumerable<FinalProject.Models.Student>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<p>
+    you can sort by name here
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Image
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-Sortby="asc">
+                    <img src="~/Images/dsc.png" width="32" height="32" alt="sort Asce" />
+                </a>
+                @Html.DisplayNameFor(model => model.studentName)
+                <a asp-action="Index" asp-route-Sortby="dsc">
+                    <img src="~/Images/Asc.png" width="32" height="32" alt="sort desc" />
+
+                </a>
+
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.phone)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (var item in Model) {
+        <tr style="width:100px; height:100px; text-align:center" >
+            <td>
+                <img src="@Url.Content("~/Images/"+item.imagePath)" style=" width: 100px; height: 100px; border-radius: 40%;" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.studentName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.phone)
+            </td>
+
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.studentId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.studentId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.studentId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,88 @@
+﻿@model StudentSummary
+
+@{
+    ViewData["Title"] = "StudentSummaryReport";
+}
+
+<h1>StudentSummaryReport</h1>
+
+
+<form asp-action="ShowStudentSummary">
+
+    <div class="form-group ">
+
+        <label asp-for="studentName">
+        </label>
+        <div>
+            <input asp-for="studentName" class="form-check" />
+        </div>
+        <div style="position:relative; top:20px;">
+            <input type="submit" value="Search" class="btn btn-secondary" />
+        </div>
+    </div>
+
+
+
+
+</form>
+
+
+
+<div class="card border-primary mb-3" style="max-width: 500rem; position:relative; top:30px; ">
+    <div class="card-header">Employee Summary Report</div>
+    <div class="card-body">
+        @if (Model.Students is null || Model.Students.Count() == 0)
+        {
+            <div class="alert alert-dismissible alert-warning">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                <h4 class="alert-heading">Warning!</h4>
+                <p class="mb-0">No Students match .</p>
+            </div>
+        }
+        else
+        {
+            foreach (var student in Model.Students)
+            {
+
+                <div class="card border-warning mb-3" style="max-width: 60rem; ">
+                    <div class="card-header">
+                        @student.studentName
+                        <span class="badge rounded-pill bg-secondary" style="margin-left:50%; height:20px;">
+                            @{
+                                int total = 0;
+                                foreach (var studentCourse in student.StudentCourses)
+                                    total += studentCourse.Course.totalHours;
+
+                            }
+                            @total Hours Done
+                        </span>
+                    </div>
+                    <div style="display:flex; justify-content:flex-start;">
+                        <div style="width:35%; display:inline; background-color: #eeeff3; text-align: center; padding-top: 10px; padding-bottom: 10px; border-right: solid 3px #cfd5eb; ">
+                            <img src="@Url.Content("~/Images/"+student.imagePath)" class="img-thumbnail" style="width:18rem; height:15rem; border-radius: 50%; align-content:center;" alt="Employee Image" />
+                        </div>
+                        <div class="card-body" style="background-color: #f5f5f575; display:inline; padding-top:3%; ">
+                            @foreach (var studentCourse in student.StudentCourses)
+                            {
+                                <h4 class="card-title" style="margin-left:10%;">
+                                    @studentCourse.Course.Name
+                                    <span class="badge rounded-pill bg-secondary" style="margin-left:30%;">
+                                        @((studentCourse.Course.totalHours)) Hours
+
+                                    </span>
+                                </h4>
+
+
+                            }
+                        </div>
+                    </div>
+                </div>
+
+
+            }
+        }
+    </div>
+</div>
+
+
+
